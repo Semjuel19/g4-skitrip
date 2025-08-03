@@ -11,26 +11,27 @@ Static HTML/CSS/JS website for G4 Investments ski trip event landing page. No bu
 ## Code Style Guidelines
 
 ### HTML
-- Use semantic HTML5 elements
-- Include `data-translate` attributes for multilingual content
+- Use semantic HTML5 elements with 4-space indentation
+- Include `data-translate` attributes for multilingual content (sk/en/de)
 - Use proper accessibility attributes (alt, aria-labels)
-- Maintain consistent indentation (4 spaces)
+- Form actions use Formspree.io with hidden fields for configuration
 
 ### CSS
-- Use CSS custom properties for theming
-- Follow BEM-like naming conventions for classes
-- Implement responsive design with mobile-first approach
-- Use modern CSS features (Grid, Flexbox, backdrop-filter)
-- Maintain consistent spacing and typography scale
+- Use CSS custom properties and modern features (Grid, Flexbox, backdrop-filter)
+- Follow BEM-like naming conventions (.detail-item, .nav-container)
+- Mobile-first responsive design with breakpoints: 768px, 480px
+- Dark theme with glassmorphism effects (rgba backgrounds with backdrop-filter)
+- Consistent spacing scale and Inter font family
 
 ### JavaScript
-- Use modern ES6+ syntax
-- Implement proper error handling
-- Follow camelCase naming convention
-- Add event listeners after DOM content loaded
+- Use modern ES6+ syntax with const/let, arrow functions
+- camelCase naming (currentLanguage, switchLanguage)
+- Add event listeners after DOMContentLoaded
+- Implement proper error handling and form validation
+- Use localStorage for language persistence
+- Intersection Observer for scroll-based navigation updates
 
 ### Design System
-- Dark theme with glassmorphism effects
-- G4 branding colors and Inter font family
-- Ski-themed icons and animations
-- Responsive breakpoints: 768px, 480px
+- Dark theme with G4 branding colors (#4a9eff primary)
+- Ski-themed icons (🎿, ⛷️, 🏔️) and bounce animations
+- Glassmorphism cards with rgba(255,255,255,0.1) backgrounds
