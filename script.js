@@ -12,24 +12,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const successParam = urlParams.get('success');
     if (successParam === 'true' || successParam === 'trues') {
-        // First navigate to the form section, then show success message
+        // Instantly navigate to the form section
         const applicationSection = document.getElementById('section-application');
         if (applicationSection) {
-            // Smooth scroll to application section first
-            setTimeout(() => {
-                applicationSection.scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'start' 
-                });
-                
-                // Show success message after scroll completes
-                setTimeout(() => {
-                    showSuccessMessage();
-                }, 800);
-            }, 100);
-        } else {
-            showSuccessMessage();
+            applicationSection.scrollIntoView({ 
+                behavior: 'instant', 
+                block: 'start' 
+            });
         }
+        
+        // Show success message immediately
+        showSuccessMessage();
         
         // Clean up URL - remove trailing slash if present
         const cleanPath = window.location.pathname.replace(/\/$/, '');
@@ -79,12 +72,10 @@ document.addEventListener('DOMContentLoaded', function() {
             afterSubmissionDiv.style.display = 'none';
             form.style.display = 'none';
             
-            // Smooth scroll to center the success message
-            setTimeout(() => {
-                if (successDiv) {
-                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 200);
+            // Center the success message instantly
+            if (successDiv) {
+                successDiv.scrollIntoView({ behavior: 'instant', block: 'center' });
+            }
         }
     }
 });
