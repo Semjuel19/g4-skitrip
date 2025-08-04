@@ -8,11 +8,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const afterSubmissionDiv = document.getElementById('after-submission');
     
     // Check if we're returning from a successful form submission
+    // Handle both with and without trailing slash
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('success') === 'true') {
-        showSuccessMessage();
-        // Clean up URL
-        window.history.replaceState({}, document.title, window.location.pathname);
+    const successParam = urlParams.get('success');
+    if (successParam === 'true' || successParam === 'trues') {
+        // First navigate to the form section, then show success message
+        const applicationSection = document.getElementById('section-application');
+        if (applicationSection) {
+            // Smooth scroll to application section first
+            setTimeout(() => {
+                applicationSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+                
+                // Show success message after scroll completes
+                setTimeout(() => {
+                    showSuccessMessage();
+                }, 800);
+            }, 100);
+        } else {
+            showSuccessMessage();
+        }
+        
+        // Clean up URL - remove trailing slash if present
+        const cleanPath = window.location.pathname.replace(/\/$/, '');
+        window.history.replaceState({}, document.title, cleanPath || '/');
     }
     
     if (form) {
@@ -32,7 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Update redirect URL to include current page
             const nextField = form.querySelector('input[name="_next"]');
             if (nextField) {
-                nextField.value = window.location.origin + window.location.pathname + '?success=true';
+                const cleanPath = window.location.pathname.replace(/\/$/, '');
+                nextField.value = window.location.origin + cleanPath + '?success=true';
             }
             
             // Add loading state to submit button
@@ -57,21 +79,12 @@ document.addEventListener('DOMContentLoaded', function() {
             afterSubmissionDiv.style.display = 'none';
             form.style.display = 'none';
             
-            // Scroll to application section first, then to success message
-            const applicationSection = document.getElementById('section-application');
-            if (applicationSection) {
-
-                
-                // Scroll to section, then show success message
-                applicationSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                
-                // Show success message after scroll completes
-                setTimeout(() => {
-                    if (successDiv) {
-                        successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }, 800);
-            }
+            // Smooth scroll to center the success message
+            setTimeout(() => {
+                if (successDiv) {
+                    successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 200);
         }
     }
 });
