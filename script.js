@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Gallery functionality
 document.addEventListener('DOMContentLoaded', function() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryCards = document.querySelectorAll('.gallery-card');
     const modal = document.getElementById('gallery-modal');
     const modalImage = document.getElementById('modal-image');
     const closeBtn = document.querySelector('.modal-close');
@@ -141,66 +141,106 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalImagesSpan = document.getElementById('total-images');
     
     let currentImageIndex = 0;
-    const images = [];
+    let currentGalleryImages = [];
     
-    // Collect all image sources
-    galleryItems.forEach((item, index) => {
-        const img = item.querySelector('img');
-        images.push({
-            src: img.src,
-            alt: img.alt
-        });
-        
-        // Add click event to open modal
-        item.addEventListener('click', function() {
-            openModal(index);
+    // Gallery data
+    const galleries = {
+        '2025': [
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.21.jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.21 (1).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.21 (2).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.21 (3).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.21 (4).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.22.jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.22 (1).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.22 (2).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.22 (3).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.22 (4).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.22 (5).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.23.jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.23 (1).jpeg',
+            'assets/gallery/WhatsApp Image 2025-08-03 at 22.39.23 (2).jpeg'
+        ],
+        '2024': [
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.34.jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35.jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (1).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (2).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (3).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (4).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (5).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (6).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (7).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (8).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (9).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (10).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (11).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (12).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (13).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (14).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (15).jpeg',
+            'assets/gallery_2/WhatsApp Image 2025-08-11 at 18.58.35 (16).jpeg'
+        ]
+    };
+    
+    // Add click events to gallery cards
+    galleryCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const galleryYear = this.getAttribute('data-gallery');
+            openGallery(galleryYear);
         });
     });
     
-    function openModal(index) {
-        currentImageIndex = index;
+    function openGallery(year) {
+        currentGalleryImages = galleries[year].map(src => ({
+            src: src,
+            alt: `Lyžovačka ${year}`
+        }));
+        currentImageIndex = 0;
         updateModalImage();
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
     }
     
     function closeModal() {
         modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Restore scrolling
+        document.body.style.overflow = 'auto';
     }
     
     function updateModalImage() {
-        modalImage.src = images[currentImageIndex].src;
-        modalImage.alt = images[currentImageIndex].alt;
+        modalImage.src = currentGalleryImages[currentImageIndex].src;
+        modalImage.alt = currentGalleryImages[currentImageIndex].alt;
         currentImageSpan.textContent = currentImageIndex + 1;
-        totalImagesSpan.textContent = images.length;
+        totalImagesSpan.textContent = currentGalleryImages.length;
     }
     
     function showPrevImage() {
-        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
         updateModalImage();
     }
     
     function showNextImage() {
-        currentImageIndex = (currentImageIndex + 1) % images.length;
+        currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
         updateModalImage();
     }
     
     // Event listeners
-    closeBtn.addEventListener('click', closeModal);
-    prevBtn.addEventListener('click', showPrevImage);
-    nextBtn.addEventListener('click', showNextImage);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (prevBtn) prevBtn.addEventListener('click', showPrevImage);
+    if (nextBtn) nextBtn.addEventListener('click', showNextImage);
     
     // Close modal when clicking outside the image
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
     
     // Keyboard navigation
     document.addEventListener('keydown', function(e) {
-        if (modal.style.display === 'block') {
+        if (modal && modal.style.display === 'block') {
             switch(e.key) {
                 case 'Escape':
                     closeModal();
@@ -219,14 +259,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchStartX = 0;
     let touchEndX = 0;
     
-    modal.addEventListener('touchstart', function(e) {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-    
-    modal.addEventListener('touchend', function(e) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
+    if (modal) {
+        modal.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        modal.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+    }
     
     function handleSwipe() {
         const swipeThreshold = 50;
@@ -234,10 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (Math.abs(diff) > swipeThreshold) {
             if (diff > 0) {
-                // Swiped left - show next image
                 showNextImage();
             } else {
-                // Swiped right - show previous image
                 showPrevImage();
             }
         }

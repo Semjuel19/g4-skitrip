@@ -1,12 +1,15 @@
 # AGENTS.md - Development Guide for Agentic Coding Agents
 
 ## Project Type
-Static HTML/CSS/JS website for G4 Investments ski trip event landing page. No build system or package manager.
+Static HTML/CSS/JS website for G4 Investments ski trip event landing page with Node.js build system for minification and deployment packaging.
 
 ## Commands
-- **No build/lint/test commands** - Pure HTML/CSS/JS project
+- **Build**: `npm run build` - Minifies HTML/CSS/JS and copies assets to dist/
+- **Clean Build**: `npm run build:clean` - Removes old dist/ and rebuilds
+- **Package**: `npm run package` - Creates deployment zip file
+- **Clean**: `npm run clean` - Removes dist/ and deployment zip
 - **Testing**: Open `index.html` in browser for manual testing
-- **Deployment**: Static files ready for GitHub Pages or any web server
+- **Deployment**: Use `g4-skitrip-deployment.zip` for web server deployment
 
 ## Code Style Guidelines
 

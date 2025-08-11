@@ -16,10 +16,14 @@ if (!fs.existsSync(distAssetsDir)) {
     fs.mkdirSync(distAssetsDir);
 }
 
-// Create gallery directory in dist/assets
+// Create gallery directories in dist/assets
 const distGalleryDir = path.join(distAssetsDir, 'gallery');
+const distGallery2Dir = path.join(distAssetsDir, 'gallery_2');
 if (!fs.existsSync(distGalleryDir)) {
     fs.mkdirSync(distGalleryDir);
+}
+if (!fs.existsSync(distGallery2Dir)) {
+    fs.mkdirSync(distGallery2Dir);
 }
 
 console.log('🚀 Starting build process...');
@@ -102,16 +106,38 @@ mainAssets.forEach(asset => {
     }
 });
 
-// Copy gallery images
+// Copy gallery images (2025)
+console.log('📸 Copying gallery images (Lyžovačka 2025)...');
 const galleryDir = path.join('assets', 'gallery');
+let gallery2025Count = 0;
 if (fs.existsSync(galleryDir)) {
     const galleryFiles = fs.readdirSync(galleryDir);
     galleryFiles.forEach(file => {
         if (file.endsWith('.jpeg') || file.endsWith('.jpg') || file.endsWith('.png')) {
             fs.copyFileSync(path.join(galleryDir, file), path.join(distGalleryDir, file));
-            console.log(`   ✅ Copied gallery/${file}`);
+            gallery2025Count++;
         }
     });
+    console.log(`   ✅ Copied ${gallery2025Count} images from gallery/ (2025)`);
+} else {
+    console.log('   ⚠️  Gallery folder not found');
+}
+
+// Copy gallery_2 images (2024)
+console.log('📸 Copying gallery_2 images (Lyžovačka 2024)...');
+const gallery2Dir = path.join('assets', 'gallery_2');
+let gallery2024Count = 0;
+if (fs.existsSync(gallery2Dir)) {
+    const gallery2Files = fs.readdirSync(gallery2Dir);
+    gallery2Files.forEach(file => {
+        if (file.endsWith('.jpeg') || file.endsWith('.jpg') || file.endsWith('.png')) {
+            fs.copyFileSync(path.join(gallery2Dir, file), path.join(distGallery2Dir, file));
+            gallery2024Count++;
+        }
+    });
+    console.log(`   ✅ Copied ${gallery2024Count} images from gallery_2/ (2024)`);
+} else {
+    console.log('   ⚠️  Gallery_2 folder not found');
 }
 
 // Skip copying README.md and AGENTS.md for production build

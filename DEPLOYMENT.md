@@ -6,13 +6,13 @@ Your project has been successfully minified and optimized for production deploym
 
 ### 🎯 Compression Results
 
-- **CSS**: 15.20KB → 10.21KB (32.8% reduction)
-- **JavaScript**: 8.04KB → 3.19KB (60.4% reduction)  
-- **HTML**: 14.03KB → 8.92KB (36.4% reduction)
+- **CSS**: 15.50KB → 10.46KB (32.5% reduction)
+- **JavaScript**: 10.68KB → 5.26KB (50.8% reduction)  
+- **HTML**: 13.75KB → 8.28KB (39.8% reduction)
 
 ### 📁 Deployment Package
 
-**File**: `g4-skitrip-deployment.zip` (5.7MB)
+**File**: `g4-skitrip-deployment.zip` (9.3MB)
 
 This zip file contains everything needed for deployment:
 
@@ -26,8 +26,10 @@ dist/
     ├── G4_biele-logo-biele.png
     ├── nav-bar-scroll.png
     ├── nav-bar-top.png
-    └── gallery/
-        └── [14 gallery images]
+    ├── gallery/
+    │   └── [14 gallery images - Lyžovačka 2025]
+    └── gallery_2/
+        └── [18 gallery images - Lyžovačka 2024]
 ```
 
 ### 🚀 Deployment Instructions
@@ -52,8 +54,14 @@ npm install
 # Build minified version
 npm run build
 
-# Create deployment package
+# Clean build (removes old dist folder first)
+npm run build:clean
+
+# Create deployment package (includes clean build)
 npm run package
+
+# Clean up build files
+npm run clean
 ```
 
 ### 🌐 Production Features
@@ -63,8 +71,18 @@ npm run package
 - ✅ All assets included and organized
 - ✅ Form integration with Formspree
 - ✅ Responsive design for all devices
-- ✅ Gallery with modal functionality
+- ✅ Dual gallery system (2024 & 2025) with modal functionality
+- ✅ Clickable G4 logo linking to https://g4.sk
 - ✅ Smooth scrolling and animations
+
+### 📸 Gallery Structure
+
+The site now includes two separate photo galleries:
+
+- **Lyžovačka 2025**: 14 photos from `assets/gallery/`
+- **Lyžovačka 2024**: 17 photos from `assets/gallery_2/`
+
+Each gallery displays as a card with a 2x2 mosaic preview. Clicking opens a full-screen lightbox with navigation controls, keyboard shortcuts, and mobile swipe support.
 
 ### 📋 Deployment Checklist
 

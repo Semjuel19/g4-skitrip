@@ -4,8 +4,10 @@
   "description": "G4 Investments Ski Trip Landing Page",
   "scripts": {
     "build": "node build.js",
+    "clean": "rm -rf dist/ g4-skitrip-deployment.zip",
+    "build:clean": "npm run clean && npm run build",
     "minify": "npm run build",
-    "package": "npm run build && zip -r g4-skitrip-deployment.zip dist/",
+    "package": "npm run build:clean && zip -r g4-skitrip-deployment.zip dist/",
     "deploy": "npm run package"
   },
   "devDependencies": {
